@@ -5,8 +5,8 @@ const prisma = new PrismaClient();
 async function main() {
   await prisma.product.upsert({
     where: { id: 1 },
-    update: { name: "Smartphone Flagship", price: 15000000, stock: 10 },
-    create: { id: 1, name: "Smartphone Flagship", price: 15000000, stock: 10 },
+    update: { name: "Smartphone Flagship", price: 15000000, stock: 50 },
+    create: { id: 1, name: "Smartphone Flagship", price: 15000000, stock: 50 },
   });
 }
 
