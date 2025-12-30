@@ -1,0 +1,121 @@
+{
+    "info": {
+      "_postman_id": "8b3f9e3c-9b6a-4d8d-9d77-4e6b9d1e9a10",
+      "name": "Flash Sale Engine (Express + TS + Prisma + Redis)",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+      { "key": "baseUrl", "value": "http://localhost:3000" },
+      { "key": "productId", "value": "1" },
+      { "key": "userId", "value": "101" },
+      { "key": "idempotencyKey", "value": "demo-12345678" }
+    ],
+    "item": [
+      {
+        "name": "Health",
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": { "raw": "{{baseUrl}}/health", "host": ["{{baseUrl}}"], "path": ["health"] }
+        }
+      },
+      {
+        "name": "Get Product by ID",
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "{{baseUrl}}/api/v1/products/{{productId}}",
+            "host": ["{{baseUrl}}"],
+            "path": ["api", "v1", "products", "{{productId}}"]
+          }
+        }
+      },
+      {
+        "name": "Flash Sale",
+        "item": [
+          {
+            "name": "Buy (201 expected)",
+            "event": [
+              {
+                "listen": "prerequest",
+                "script": {
+                  "type": "text/javascript",
+                  "exec": [
+                    "// Optional: auto-generate a new idempotency key each run",
+                    "// Comment these 2 lines if you want to keep the same key",
+                    "const k = `idem-${Date.now()}-${Math.random().toString(16).slice(2)}`;",
+                    "pm.collectionVariables.set('idempotencyKey', k);"
+                  ]
+                }
+              }
+            ],
+            "request": {
+              "method": "POST",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" },
+                { "key": "X-Idempotency-Key", "value": "{{idempotencyKey}}" }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"product_id\": {{productId}},\n  \"user_id\": {{userId}}\n}"
+              },
+              "url": {
+                "raw": "{{baseUrl}}/api/v1/flash-sale/buy",
+                "host": ["{{baseUrl}}"],
+                "path": ["api", "v1", "flash-sale", "buy"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Buy (retry with SAME idempotency key; 200 expected if already success)",
+            "request": {
+              "method": "POST",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" },
+                { "key": "X-Idempotency-Key", "value": "{{idempotencyKey}}" }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"product_id\": {{productId}},\n  \"user_id\": {{userId}}\n}"
+              },
+              "url": {
+                "raw": "{{baseUrl}}/api/v1/flash-sale/buy",
+                "host": ["{{baseUrl}}"],
+                "path": ["api", "v1", "flash-sale", "buy"]
+              }
+            },
+            "response": []
+          }
+        ]
+      },
+      {
+        "name": "Orders",
+        "item": [
+          {
+            "name": "List Orders",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": { "raw": "{{baseUrl}}/api/v1/orders", "host": ["{{baseUrl}}"], "path": ["api", "v1", "orders"] }
+            }
+          },
+          {
+            "name": "List Orders by product_id",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{baseUrl}}/api/v1/orders?product_id={{productId}}",
+                "host": ["{{baseUrl}}"],
+                "path": ["api", "v1", "orders"],
+                "query": [{ "key": "product_id", "value": "{{productId}}" }]
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+  
