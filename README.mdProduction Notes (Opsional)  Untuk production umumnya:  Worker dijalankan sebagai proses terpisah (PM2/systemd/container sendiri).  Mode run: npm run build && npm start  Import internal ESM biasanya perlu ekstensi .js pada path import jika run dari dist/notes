@@ -1,0 +1,6 @@
+Production Notes:
+
+Untuk production umumnya:
+1. Worker dijalankan sebagai proses terpisah (PM2/systemd/container sendiri).
+2. Mode run: npm run build && npm start
+3. Import internal ESM biasanya perlu ekstensi .js pada path import jika run dari dist/.
