@@ -1,4 +1,4 @@
-import { prisma } from "../lib/prisma";
+import { prisma } from "../lib/prisma.js";
 
 export async function listOrders(productId?: number) {
   const orders = await prisma.order.findMany({

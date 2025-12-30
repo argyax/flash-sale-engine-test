@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import { buyFlashSale } from "../services/flashsale.service";
+import { buyFlashSale } from "../services/flashsale.service.js";
 
 export async function buy(req: Request, res: Response, next: NextFunction) {
   try {

@@ -1,0 +1,15 @@
+import { z } from "zod";
+import { listOrders } from "../services/orders.service.js";
+import { HttpError } from "../lib/errors.js";
+export async function list(req, res, next) {
+    try {
+        const qp = z.object({ product_id: z.coerce.number().int().positive().optional() }).safeParse(req.query);
+        if (!qp.success)
+            throw new HttpError(422, "validation_error", "Invalid query params");
+        const data = await listOrders(qp.data.product_id);
+        res.json(data);
+    }
+    catch (e) {
+        next(e);
+    }
+}

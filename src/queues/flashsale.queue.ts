@@ -1,5 +1,5 @@
 import { Queue } from "bullmq";
-import { redisConnection } from "../lib/redis";
+import { redisConnection } from "../lib/redis.js";
 
 export const flashSaleQueue = new Queue("flash-sale", {
   connection: redisConnection,

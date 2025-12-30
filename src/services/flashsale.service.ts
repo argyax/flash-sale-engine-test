@@ -1,9 +1,9 @@
 // src/services/flashsale.service.ts
 import { z } from "zod";
-import { redis } from "../lib/redis";
-import { HttpError } from "../lib/errors";
-import { env } from "../env";
-import { flashSaleQueue } from "../queues/flashsale.queue";
+import { redis } from "../lib/redis.js";
+import { HttpError } from "../lib/errors.js";
+import { env } from "../env.js";
+import { flashSaleQueue } from "../queues/flashsale.queue.js";
 import crypto from "crypto";
 
 export const buySchema = z.object({

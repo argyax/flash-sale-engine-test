@@ -1,5 +1,5 @@
-import { prisma } from "../lib/prisma";
-import { redis } from "../lib/redis";
+import { prisma } from "../lib/prisma.js";
+import { redis } from "../lib/redis.js";
 
 export async function warmupStockToRedis() {
   const products = await prisma.product.findMany({ select: { id: true, stock: true } });

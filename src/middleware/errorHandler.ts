@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import { HttpError } from "../lib/errors";
+import { HttpError } from "../lib/errors.js";
 
 export function errorHandler(err: any, _req: Request, res: Response, _next: NextFunction) {
   const status = err instanceof HttpError ? err.status : 500;

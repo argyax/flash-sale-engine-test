@@ -1,7 +1,7 @@
 // src/queues/flashsale.worker.ts
 import { Worker } from "bullmq";
-import { redisConnection, redis } from "../lib/redis";
-import { prisma } from "../lib/prisma";
+import { redisConnection, redis } from "../lib/redis.js";
+import { prisma } from "../lib/prisma.js";
 
 type JobData = {
   orderId: string;

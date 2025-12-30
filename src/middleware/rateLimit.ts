@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
-import { redis } from "../lib/redis";
-import { env } from "../env";
-import { HttpError } from "../lib/errors";
+import { redis } from "../lib/redis.js";
+import { env } from "../env.js";
+import { HttpError } from "../lib/errors.js";
 
 export async function rateLimit(req: Request, _res: Response, next: NextFunction) {
   // bucket: per-IP per-second

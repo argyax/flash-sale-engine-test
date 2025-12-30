@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { getProductById } from "../services/products.service";
-import { HttpError } from "../lib/errors";
+import { getProductById } from "../services/products.service.js";
+import { HttpError } from "../lib/errors.js";
 
 export async function getOne(req: Request, res: Response, next: NextFunction) {
   try {

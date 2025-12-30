@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { listOrders } from "../services/orders.service";
-import { HttpError } from "../lib/errors";
+import { listOrders } from "../services/orders.service.js";
+import { HttpError } from "../lib/errors.js";
 
 export async function list(req: Request, res: Response, next: NextFunction) {
   try {

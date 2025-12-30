@@ -1,6 +1,6 @@
-import { prisma } from "../lib/prisma";
-import { redis } from "../lib/redis";
-import { HttpError } from "../lib/errors";
+import { prisma } from "../lib/prisma.js";
+import { redis } from "../lib/redis.js";
+import { HttpError } from "../lib/errors.js";
 
 export async function getProductById(id: number) {
   const prod = await prisma.product.findUnique({ where: { id } });
